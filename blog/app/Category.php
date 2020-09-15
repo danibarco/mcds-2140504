@@ -14,4 +14,8 @@ class Category extends Model
     protected $fillable = [
         'name', 'photo', 'description'
     ];
+
+    public function game(){
+        return $this->hasMany('App\Game');
+    }
 }
