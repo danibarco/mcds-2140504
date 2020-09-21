@@ -28,3 +28,8 @@ Route::get('users', function() {
 Route::get('users/{id}', function($id) {
     dd(App\User::findOrFail($id));
 });
+
+Route::get('registros', function() {
+    $fecha_actual = date("Y-m-d");
+    return $fecha_actual;
+});
