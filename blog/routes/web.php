@@ -42,3 +42,10 @@ Route::get('registros', function() {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/examples', function () {
+    $users = App\User::all()->take(100);
+    $categories = App\Category::all()->take(3);
+    $games = App\Game::all();
+    return view('examples',['users'=>$users,'categories'=>$categories,'games'=>$games]);
+});
