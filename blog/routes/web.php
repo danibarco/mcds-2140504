@@ -49,3 +49,9 @@ Route::get('/examples', function () {
     $games = App\Game::all();
     return view('examples',['users'=>$users,'categories'=>$categories,'games'=>$games]);
 });
+
+Route::resources([
+    'users' => 'UserController',
+    //'categories' => 'CategoryController',
+    //'games' => 'GameController'
+]);
