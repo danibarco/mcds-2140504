@@ -6,7 +6,7 @@
 		<div class="col-md-10 offset-md-1">
 			<h1> <i class="fa fa-users"></i> Lista de Usuarios</h1>
 			<hr>
-			<a href="{{ url('users/create') }}" class="btn btn-success"> 
+			<a href="{{ route('users.create') }}" class="btn btn-success"> 
 				<i class="fa fa-plus"></i>
 				Adicionar Usuario 
 			</a>
@@ -37,6 +37,9 @@
 					@endforeach
 				</tbody>
 			</table>
+			<div class="d-flex justify-content-center">
+                    {{  $users->links() }}
+            </div>
 		</div>
 	</div>
 @endsection
