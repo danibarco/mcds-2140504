@@ -43,8 +43,26 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        //
-        dd($request->all());
+        //dd($request->all());
+        $user = new User;
+        $user->fullname = $request->fullname;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->birthdate = $request->birthdate;
+        $user->gender    = $request->gender;
+        $user->address   = $request->address;
+
+        if($request->hasFile('photo')){
+            $file = time() .'.'.$request->photo->extension();
+            $request->photo->move(public_path('imgs'), $file);
+            $user->photo = 'imgs/'.$file;
+        }
+
+        $user->password = bcrypt($request->password);
+
+        if($user->save()){
+            return redirect('users')->with('message', 'El Usuario:' .$user->fullname.' fue Adicionado con Exito!');
+        }
     }
 
     /**
@@ -55,7 +73,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        //dd($user);
+        return view('users.show')->with('user', $user);
     }
 
     /**
