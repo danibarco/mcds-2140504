@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Request\UserRequest;
+use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
-    public function __construct() {
+    public function __construct() 
+    {
         $this->middleware('auth');
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +31,6 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
         return view('users.create');
     }
 
@@ -45,24 +44,23 @@ class UserController extends Controller
     {
         //dd($request->all());
         $user = new User;
-        $user->fullname = $request->fullname;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
+        $user->fullname  = $request->fullname;
+        $user->email     = $request->email;
+        $user->phone     = $request->phone;
         $user->birthdate = $request->birthdate;
         $user->gender    = $request->gender;
         $user->address   = $request->address;
-
-        if($request->hasFile('photo')){
-            $file = time() .'.'.$request->photo->extension();
+        if ($request->hasFile('photo')) {
+            $file = time().'.'.$request->photo->extension();
             $request->photo->move(public_path('imgs'), $file);
             $user->photo = 'imgs/'.$file;
         }
+        $user->password  = bcrypt($request->password);
 
-        $user->password = bcrypt($request->password);
+        if($user->save()) {
+            return redirect('users')->with('message', 'El Usuario: '.$user->fullname.' fue Adicionado con Exito!');
+        } 
 
-        if($user->save()){
-            return redirect('users')->with('message', 'El Usuario:' .$user->fullname.' fue Adicionado con Exito!');
-        }
     }
 
     /**
@@ -85,7 +83,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('users.edit')->with('user', $user);
     }
 
     /**
@@ -95,9 +93,24 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserRequest $request, User $user)
     {
-        //
+        //dd($request->all());
+        $user->fullname  = $request->fullname;
+        $user->email     = $request->email;
+        $user->phone     = $request->phone;
+        $user->birthdate = $request->birthdate;
+        $user->gender    = $request->gender;
+        $user->address   = $request->address;
+        if ($request->hasFile('photo')) {
+            $file = time().'.'.$request->photo->extension();
+            $request->photo->move(public_path('imgs'), $file);
+            $user->photo = 'imgs/'.$file;
+        }
+
+        if($user->save()) {
+            return redirect('users')->with('message', 'El Usuario: '.$user->fullname.' fue Modificado con Exito!');
+        } 
     }
 
     /**
@@ -108,6 +121,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        if($user->delete()) {
+            return redirect('users')->with('message', 'El Usuario: '.$user->fullname.' fue Eliminado con Exito!');
+        } 
     }
 }
