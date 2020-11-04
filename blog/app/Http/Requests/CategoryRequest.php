@@ -50,7 +50,9 @@ class CategoryRequest extends FormRequest
 
     public function attributes() {
         return [
-            'name' => 'Nombre Completo'
+            'name' => 'Nombre Categoría',
+            'description' => 'Descripción',
+            'photo' => 'Foto'
         ];
     }
 

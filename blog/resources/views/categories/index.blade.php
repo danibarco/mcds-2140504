@@ -14,7 +14,7 @@
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
-						<th>Nombre Completo</th>
+						<th>Nombre Categoría</th>
 						<th>Foto</th>
 						<th>Descripción</th>
 						<th>Acciones</th>

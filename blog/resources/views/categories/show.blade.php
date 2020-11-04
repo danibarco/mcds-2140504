@@ -36,7 +36,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>Nombre Completo:</th>
+					<th>Nombre Categoría:</th>
 					<td>{{ $category->name }}</td>
 				</tr>
 				<tr>
