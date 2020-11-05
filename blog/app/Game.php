@@ -11,11 +11,11 @@ class Game extends Model
    ];
 
     public function user(){
-        return $this->belonsTo('App\User');
+        return $this->belongsTo('App\User');
     }
 
     public function category(){
-        return $this->belonsTo('App\Category');
+        return $this->belongsTo('App\Category');
     }
 
 }

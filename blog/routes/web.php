@@ -1,8 +1,8 @@
+  
 <?php
 
 use Illuminate\Support\Facades\Route;
 use \Carbon\Carbon;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,40 +18,41 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('helloworld', function () {
+/*Route::get('helloworld', function () {
     return "<h1>Hello World</h1>";
-});
+});*/
 
-//Route::get('users', function() {
-    //dd(App\User::all());
-//});
+/*Route::get('users', function () {
+    dd(App\User::all());
+});*/
 
-//Route::get('users/{id}', function($id) {
-    //dd(App\User::findOrFail($id));
-//});
+/*Route::get('user/{id}', function ($id) {
+    dd(App\User::findOrFail($id));
+});*/
 
-Route::get('registros', function() {
-    foreach(App\User::all()->take(10) as $user){
+Route::get('challenge', function () {
+    foreach (App\User::all()->take(10) as $user) {
         $years = Carbon::createFromDate($user->birthdate)->diff()->format('%y years old');
         $since = Carbon::parse($user->created_at);
-        $rs[] = $user->fullname." - ".$years." - created ".$since->diffForHumans();
+    	$rs[]  = $user->fullname." - ".$years." - created ".$since->diffForHumans();
     }
-    return view('registros', ['rs' => $rs]);
+    return view('challenge', ['rs' => $rs]);
 });
+
+/*Route::get('examples', function () {
+    return view('examples');
+});*/
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/examples', function () {
-    $users = App\User::all()->take(100);
-    $categories = App\Category::all()->take(3);
-    $games = App\Game::all();
-    return view('examples',['users'=>$users,'categories'=>$categories,'games'=>$games]);
-});
-
+// Resources
 Route::resources([
-    'users' => 'UserController',
-    'categories' => 'CategoryController',
-    //'games' => 'GameController'
+    'users'       => 'UserController',
+    'categories'  => 'CategoryController',
+    'games'       => 'GameController',
 ]);
+
+// Middleware
+Route::get('locale/{locale}', 'LocaleController@index');
+
+Route::get('/home', 'HomeController@index')->name('home');
