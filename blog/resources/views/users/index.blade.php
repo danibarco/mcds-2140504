@@ -10,6 +10,10 @@
 				<i class="fa fa-plus"></i>
 				Adicionar Usuario 
 			</a>
+			<a href="{{ url('generate/pdf/users') }}" class="btn btn-light"> 
+				<i class="fa fa-file-pdf"></i>
+				Exporta PDF
+			</a>
 			<br><br>
 			<table class="table table-striped table-hover">
 				<thead>

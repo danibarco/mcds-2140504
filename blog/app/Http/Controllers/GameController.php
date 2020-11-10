@@ -89,7 +89,11 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
-        //
+        $users = User::where('role', 'Admin')->get();
+        $cats  = Category::all();
+        return view('games.edit')->with('users', $users)
+                                 ->with('cats', $cats)
+                                 ->with('game', $game);
     }
 
     /**
@@ -99,9 +103,27 @@ class GameController extends Controller
      * @param  \App\Game  $game
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Game $game)
+    public function update(GameRequest $request, Game $game)
     {
-        //
+        $game->name        = $request->name;
+        $game->description = $request->description;
+        if ($request->hasFile('photo')) {
+            $file = time().'.'.$request->image->extension();
+            $request->image->move(public_path('imgs'), $file);
+            $game->image = 'imgs/'.$file;
+        }
+        $game->user_id      = $request->user_id;
+        $game->category_id  = $request->category_id;
+        if($game->slider == 2) {
+            $game->slider = 0;
+        } else {
+            $game->slider = $request->slider;
+        }
+        $game->price      = $request->price;
+
+        if($game->save()) {
+            return redirect('games')->with('message', 'El Juego: '.$game->name.' fue Modificado con Exito!');
+        } 
     }
 
     /**
@@ -112,6 +134,8 @@ class GameController extends Controller
      */
     public function destroy(Game $game)
     {
-        //
+        if($game->delete()) {
+            return redirect('games')->with('message', 'El Juego: '.$game->name.' fue Eliminado con Exito!');
+        } 
     }
 }
