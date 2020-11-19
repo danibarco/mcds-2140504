@@ -6,6 +6,9 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 
+use App\Exports\UserExport;
+use App\Imports\UserImport;
+
 class UserController extends Controller
 {
     public function __construct() 
@@ -130,5 +133,15 @@ class UserController extends Controller
         $users = User::all();
         $pdf = \PDF::loadView('users.pdf', compact('users'));
         return $pdf->download('allusers.pdf');
+    }
+
+    public function excel() {
+        return \Excel::download(new UserExport, 'allusers.xlsx');
+    }
+
+    public function import(Request $request) {
+        $file = $request->file('file');
+        \Excel::import(new UserImport, $file);
+        return redirect()->back()->with('message', 'Usuarios importados con exito!');
     }
 }

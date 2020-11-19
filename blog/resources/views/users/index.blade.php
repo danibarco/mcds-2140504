@@ -10,9 +10,21 @@
 				<i class="fa fa-plus"></i>
 				Adicionar Usuario 
 			</a>
+			<form action="{{ url('import/excel/users') }}" method="POST" enctype="multipart/form-data" class="d-inline">
+				@csrf
+				<input type="file" class="d-none" id="file" name="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+				<button type="button" class="btn btn-success btn-excel">
+					<i class="fa fa-file-excel"></i> 
+					Importar Usuarios
+				</button>
+			</form>
 			<a href="{{ url('generate/pdf/users') }}" class="btn btn-light"> 
 				<i class="fa fa-file-pdf"></i>
-				Exporta PDF
+				Exportar PDF
+			</a>
+			<a href="{{ url('generate/excel/users') }}" class="btn btn-light"> 
+				<i class="fa fa-file-excel"></i>
+				Exportar Excel
 			</a>
 			<br><br>
 			<table class="table table-striped table-hover">
