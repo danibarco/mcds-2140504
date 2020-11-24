@@ -65,3 +65,6 @@ Route::post('import/excel/users', 'UserController@import');
 Route::get('locale/{locale}', 'LocaleController@index');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Search Scope
+Route::post('users/search', 'UserController@search');

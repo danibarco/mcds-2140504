@@ -84,6 +84,22 @@
                 $(this).parent().submit();
             });
             /* - - -*/
+            $('body').on('keyup','#qsearch', function(event){
+                event.preventDefault();
+                $q = $(this).val();
+                $t = $('input[name=_token]').val();
+                $m = $('#tmodel').val();
+                $('.loader').removeClass('d-none');
+                $('.table').hide();
+                $sto = setTimeout(function(){
+                    clearTimeout($sto);
+                    $.post($m+'/search', {q: $q, _token: $t}, function(data) {
+                        $('.loader').addClass('d-none');
+                        $('#content').html(data);
+                        $('.table').fadeIn('slow');
+                    });
+                }, 2000);
+            });
         });
     </script>
 </body>
