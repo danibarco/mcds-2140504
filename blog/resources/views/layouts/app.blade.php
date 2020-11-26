@@ -52,6 +52,17 @@
                 });
             @endif
             /* - - -*/
+            @if (session('error'))
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'error',
+                  title: 'Acceso Denegado',
+                  text: '{{ session('error') }}',
+                  showConfirmButton: false,
+                  timer: 2500
+                });
+            @endif
+            /* - - -*/
             $('.btn-delete').click(function(event) {
                 Swal.fire({
                     title: 'Esta usted seguro ?',

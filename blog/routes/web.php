@@ -45,6 +45,17 @@ Route::get('challenge', function () {
 
 Auth::routes();
 
+Route::group(['middleware' => 'admin'], function(){
+
+    // Resources
+    Route::resources([
+        'users'       => 'UserController',
+        'categories'  => 'CategoryController',
+        'games'       => 'GameController',
+    ]);
+
+});
+
 // Resources
 Route::resources([
     'users'       => 'UserController',
